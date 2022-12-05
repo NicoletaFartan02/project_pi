@@ -1,6 +1,7 @@
 # to activate the app in cmd ".\\env\Scripts\activate"
 # to run the app "flask run"
 
+import datetime
 import json
 import requests
 from flask import Flask, render_template, request, redirect, url_for, flash
@@ -45,7 +46,7 @@ def index_get():
 
         weather = {
             'city' : city.name,
-            'temperature' : r['main']['temp'],
+            'temperature' : round(r['main']['temp']),
             'description' : r['weather'][0]['description'],
             'icon' : r['weather'][0]['icon'],
         }
@@ -91,49 +92,34 @@ def delete_city(name):
 
 @app.route('/chartjs/')
 def chartjs():
-    #return render_template('chartjs.html')
-    new_city = request.form.get('city')
+    
+    # new_city = request.form.get('city')
 
-    if new_city:
-        existing_city = City.query.filter_by(name=new_city).first()
-        if not existing_city:
-            new_city_data = get_weather_data_5(new_city)
-            if new_city_data['cod'] == 200:
-                new_city_obj = City(name=new_city)
-                db.session.add(new_city_obj)
-                db.session.commit()
+    # if new_city:
+    #     existing_city = City.query.filter_by(name=new_city).first()
+    #     if not existing_city:
+    #         new_city_data = get_weather_data_5(new_city)
+    #         if new_city_data['cod'] == 200:
+    #             new_city_obj = City(name=new_city)
+    #             db.session.add(new_city_obj)
+    #             db.session.commit()
 
-    cities = City.query.all()
-     
-    weather_data1 = []
-    weather_data2 = []
+    # cities = City.query.all()
 
-    for city in cities:
+    # for city in cities:
 
-        r1 = get_weather_data_5(city.name)  
+    r1 = get_weather_data_5('Las Vegas') 
+    
+    reportTime1 = datetime.datetime.utcfromtimestamp(r1['list'][0]['dt']).strftime('%d %b %Y')
+    report2 = datetime.datetime.utcfromtimestamp(r1['list'][4]['dt']).strftime('%d %b %Y')
+    reportt3 = datetime.datetime.utcfromtimestamp(r1['list'][12]['dt']).strftime('%d %b %Y')
+    reporttt4 = datetime.datetime.utcfromtimestamp(r1['list'][20]['dt']).strftime('%d %b %Y')
+    reporty5 = datetime.datetime.utcfromtimestamp(r1['list'][28]['dt']).strftime('%d %b %Y')
 
-        print(r1)
-
-        weather_days = {
-            'day1' : r1['list'][0]['dt_txt'],
-            'day2' : r1['list'][1]['dt_txt'],
-            'day3' : r1['list'][2]['dt_txt'],
-            'day4' : r1['list'][3]['dt_txt'],
-            'day5' : r1['list'][4]['dt_txt'],
-                
-        }
-        weather_temp = {
-
-            'temperature1' : r1['list'][0]['main']['temp'],
-            'temperature2' : r1['list'][1]['main']['temp'],
-            'temperature3' : r1['list'][2]['main']['temp'],
-            'temperature4' : r1['list'][3]['main']['temp'],
-            'temperature5' : r1['list'][4]['main']['temp'],
-        }
-    labels = [row[1] for row in weather_days]
-    values = [row[1] for row in weather_temp]
-
-       # weather_data1.append(weather_days)
-        #weather_data2.append(weather_temp)
-   # return render_template('chartjs.html', weather_data1 = json.dumps(weather_days),  weather_data2 = json.dumps(weather_temp))
+    weather_days=[reportTime1, report2, reportt3,
+     reporttt4, reporty5]
+    
+    weather_temp=[round(r1['list'][0]['main']['temp']), round(r1['list'][4]['main']['temp']),
+     round(r1['list'][12]['main']['temp']), round(r1['list'][20]['main']['temp']), round(r1['list'][28]['main']['temp'])]
+    
     return render_template('chartjs.html', labels=weather_days, values=weather_temp)

@@ -59,10 +59,10 @@
       // var getData = $.get('/chartjs/');
     // data block
     const data = {
-      labels: ['07-12-2022','08-12-2022','09-12-2022','10-12-2022','11-12-2022'],     //{{ labels | safe }}
+      labels:  {{ labels|tojson }},   //['07-12-2022','08-12-2022','09-12-2022','10-12-2022','11-12-2022'],     //{{ labels | safe }}
       datasets: [{
         label: 'Grade Celsius',
-        data: [8,10,13,13,12],       //{{ values | safe }}
+        data:  {{ values|tojson }},            //[8,10,13,13,12],       //{{ values | safe }}
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',
@@ -86,6 +86,10 @@
       type: 'line',
       data: data,
       options: {
+        // parsing: {
+        //   xAxisKey: label,
+        //   yAxisKey: data
+        // },
         scales: {
           y: {
             beginAtZero: true
