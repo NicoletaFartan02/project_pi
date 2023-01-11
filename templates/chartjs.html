@@ -38,16 +38,53 @@
       }
     </style>
   </head>
-  <body>
-    <div class="chartMenu">
+  <body style="background-color:rgba(75, 192, 192, 0.2)">
+    <div  class="chartMenu">
       <p>5 Days Weather</p>
     </div>
-    <div class="container">
+    <div  class="container">
       <a href="http://127.0.0.1:5000/">
-      <button class="button is-centered is-link is-rounded ">Home</button>
+      <button class="button is-left is-link is-rounded ">Home</button>
       </a>
+      <div >
+        <p style="text-align:center;font-size:40px" ><strong>{{weather_city}}</strong></p>
+      </div>
    </div>
-    <div class="chartCard">
+
+   <!-- <section class="section">
+    <div class="container">
+        <div class="columns">
+            <div class="column is-offset-4 is-4">
+                <form method="POST">
+                    <div class="field has-addons">
+                        <div class="control is-expanded">
+                            <input class="input" name="city" type="text" placeholder="City Name">
+                        </div>
+                        <div class="control">
+                            <button class="button is-info">
+                                Add City
+                            </button>
+                        </div>
+                    </div>
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            {% set message_class = 'is-success' %}
+
+                            {% if category == 'error' %}
+                                {% set message_class = 'is-danger' %}
+                            {% endif %}
+                            <div class="notification {{ message_class }}">{{ message }}</div>
+                        {% endfor %}
+                      {% endif %}
+                      {% endwith %}
+                </form>
+            </div>
+        </div>
+    </div>
+</section> -->
+
+    <div  class="chartCard">
       <div class="chartBox">
         <canvas id="myChart"></canvas>
       </div>

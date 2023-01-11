@@ -5,19 +5,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>How's the weather?</title>
+    <title>How's the weather on your holiday?</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css" />
+    <script src="https://kit.fontawesome.com/f544232086.js" crossorigin="anonymous"></script>
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css" integrity="sha384-QYIZto+st3yW+o8+5OHfT6S482Zsvz2WfOzpFSXMF9zqeLcFV0/wlZpMtyFcZALm" crossorigin="anonymous"> -->
+    <style>
+        .fa-bell{
+            color: #6A00FF;
+        }
+    </style>
+    <!-- <script>
+        window.onload = function () {
+          var span = document.createElement('span');
+        
+          span.className = 'fa';
+          span.style.display = 'none';
+          document.body.insertBefore(span, document.body.firstChild);
+          
+          alert(window.getComputedStyle(span, null).getPropertyValue('font-family'));
+            
+          document.body.removeChild(span);
+        };
+        </script> -->
+        <!-- <style> 
+            body {
+              background-image: url({{url_for('static', filename='builtin/pic.jpg')}});
+            }
+            </style> -->
 </head>
 
-<body>
-    <section class="hero is-primary">
+<body style= "background-image: url({{url_for('static', filename='builtin/coulds2.jpg')}})">
+    <section style= "background-image: url({{url_for('static', filename='builtin/pic2.jpg')}})" class="hero is-primary">
         <div class="hero-body">
             <div class="container">
-                <h1 class="title">
-                    How's the weather?
+                <h1 style="color: #000;"class="title">
+                    Perfect weather for a holiday?
                 </h1>
             </div>
-            <div class="container">
+            <div style="color:rgb(2, 2, 68)" class="container">
                <a href="{{ url_for('chartjs') }}"><button class="button is-centered is-link is-large is-rounded is-pulled-right ">Weather Diagram</button></a>
             </div>
         </div>
@@ -54,6 +80,7 @@
             </div>
         </div>
     </section>
+    
     <section class="section">
         <div class="container">
             <div class="columns">
@@ -73,22 +100,30 @@
                                         <br>
                                         <span class="subtitle">{{ weather.temperature }}° C</span>
                                         <br> {{ weather.description }}
+                                        
                                     </p>
                                 </div>
+                                
                             </div>
                             <div class="media-right">
+                                {% if weather.temperature >= 20 %}
+                                    <a href="#"><i class="fa-solid fa-bell fa-3x"></i></a>
+                                {% endif %}
                                <a href="{{ url_for('delete_city', name=weather.city) }}">
                                     <button class="delete"></button>
                                </a>
+                               
                             </div>
+                            
                         </article>
+                        
                     </div>
                     {% endfor %}
                 </div>
             </div>
         </div>
     </section>
-    <footer class="footer">
+    <footer style= "background-image: url({{url_for('static', filename='builtin/clouds.jpg')}})" class="footer">
     </footer>
 </body>
 
